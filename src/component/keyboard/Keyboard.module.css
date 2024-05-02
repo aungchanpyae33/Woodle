@@ -1,0 +1,32 @@
+.keyboard1 {
+  width: 100%;
+  margin-top: 0.5rem;
+  filter: brightness(100%);
+}
+.point {
+  filter: brightness(95%);
+}
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  gap: 0.2rem;
+  margin-bottom: 0.3rem;
+}
+
+div .row:first-child button,
+div .row:nth-child(3) button {
+  flex: 1 2 auto;
+}
+div .row:nth-child(2) button {
+  width: calc(100% / 11);
+}
+.cell {
+  font-size: 1.4rem;
+  box-sizing: border-box;
+  padding: 0.5rem 0;
+  border: none;
+  border-radius: 0.2rem;
+  cursor: pointer;
+}

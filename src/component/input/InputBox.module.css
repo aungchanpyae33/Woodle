@@ -1,0 +1,19 @@
+.inputWidth {
+  width: 10ch;
+  letter-spacing: 0.2rem;
+  font-size: 2rem;
+  padding: 0.1rem 0.5em;
+  box-sizing: border-box;
+  border: 1px solid black;
+}
+.inputWidth:focus {
+  outline: none;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  justify-content: start;
+  align-items: center;
+}

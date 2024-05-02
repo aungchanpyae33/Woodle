@@ -1,0 +1,20 @@
+.modalBox {
+  position: absolute;
+  top: 7%;
+  width: 90%;
+  z-index: 10;
+  left: 50%;
+  translate: -50% 0;
+  background-color: #ffff;
+  display: grid;
+}
+.dot {
+  border: 3px solid red;
+  text-align: center;
+}
+.modalBox button {
+  place-self: end;
+  background-color: bisque;
+  display: inline-block;
+  cursor: pointer;
+}

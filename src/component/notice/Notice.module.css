@@ -1,0 +1,19 @@
+.notice {
+  background-color: white;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  width: fit-content;
+  position: absolute;
+  top: 0;
+  text-wrap: nowrap;
+  transform: translateY(-110%);
+}
+.notice::before {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  transform: rotate(45deg);
+  background-color: white;
+  padding: 4px;
+  z-index: 1;
+}

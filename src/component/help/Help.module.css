@@ -1,0 +1,20 @@
+.help {
+  display: flex;
+  position: relative;
+  margin-bottom: 0.7rem;
+  color: #575757;
+  margin-top: 0.5rem;
+}
+.help h1 {
+  flex: 1;
+  font-size: 2rem;
+  text-align: center;
+}
+.help img {
+  cursor: pointer;
+  width: 10%;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+}
