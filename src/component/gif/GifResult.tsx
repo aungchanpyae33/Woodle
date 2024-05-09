@@ -1,6 +1,5 @@
 import { useContext, useRef } from "react";
 import styles from "./GifResult.module.css";
-import RestartButton from "../RestartButton";
 import ResultText from "../result/ResultText";
 import DataContext from "../Context";
 
@@ -35,7 +34,6 @@ function GifResult() {
         {result === "lose" && (
           <ResultText lose={true}>You Lose😥!.The answer is </ResultText>
         )}
-        {result === "lose" && <RestartButton />}
       </div>
 
       <div className={result !== "win" ? styles.show : styles.hide} style={{}}>

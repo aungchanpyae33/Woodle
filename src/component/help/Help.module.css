@@ -5,10 +5,11 @@
   color: #575757;
   margin-top: 0.5rem;
 }
-.help h1 {
+.text {
   flex: 1;
   font-size: 2rem;
   text-align: center;
+  justify-content: center;
 }
 .help img {
   cursor: pointer;

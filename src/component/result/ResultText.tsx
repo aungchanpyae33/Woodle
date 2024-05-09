@@ -3,7 +3,7 @@ import Timer from "../timer/Timer";
 import styles from "./Result.module.css";
 import DataContext from "../Context";
 import ShareButton from "../shareButton/ShareButton";
-
+import RestartButton from "../RestartButton";
 interface props {
   children: string;
   lose: boolean;
@@ -28,7 +28,10 @@ function ResultText({ children, lose }: props) {
         )}
         <Timer />{" "}
       </div>
-      <ShareButton share={share} setshare={setshare} />
+      <div className="button" style={{ display: "flex" }}>
+        {lose && <RestartButton />}
+        <ShareButton share={share} setshare={setshare} />
+      </div>
     </>
   );
 }

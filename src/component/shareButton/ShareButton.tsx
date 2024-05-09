@@ -1,10 +1,10 @@
-import { motion } from "framer-motion";
+import { animate, motion, stagger } from "framer-motion";
 import { FaSquareShareNodes } from "react-icons/fa6";
 import { FaFacebook } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa6";
 import styles from "../result/Result.module.css";
-import React from "react";
+import { useEffect } from "react";
 import data from "../../Helpers/Libs/shareData";
 interface props {
   share: boolean;
@@ -16,67 +16,39 @@ function ShareButton({ share, setshare }: props) {
     window.open(data, "_blank");
   }
 
-  const shareVariants = {
-    closed: {
-      width: "fit-content",
-      borderRadius: "4px",
-      height: "fit-content",
-      display: "flex",
-      backgroundColor: "#ccc",
-      justifyContent: "center",
-      alignItems: "center",
-      transition: {
-        duration: 0.4,
-      },
-    },
-    open: {
-      width: "40%",
-      height: "fit-content",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-around",
-      backgroundColor: "#ccc",
-      borderRadius: "5px",
-      transition: {
-        duration: 0.4,
-      },
-    },
-  };
-  const iconVariants = {
-    closed: { opacity: 0 },
-    open: {
-      opacity: 1,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-around",
-    },
-  };
+  useEffect(() => {
+    animate(
+      ".hi",
+
+      share
+        ? { opacity: 1, scale: 1, filter: "blur(0px)" }
+        : { opacity: 0, scale: 0.3, filter: "blur(20px)" },
+      {
+        duration: 0.2,
+        delay: stagger(0.3),
+      }
+    );
+  }, [share]);
   return (
-    <motion.div
+    <motion.ul
+      whileTap={{ scale: 0.95, boxShadow: "1px 1px 0px rgba(0, 0, 0, 0.25)" }}
       className={styles.share}
-      variants={shareVariants}
-      animate={share ? "open" : "closed"}
+      data-isshare={share}
       style={{ marginTop: ".5rem", marginLeft: "auto" }}
     >
-      <motion.span
-        className={styles.font}
-        variants={iconVariants}
-        style={{ width: "100%" }}
-        animate="open"
-      >
-        {share && (
-          <>
-            <FaFacebook onClick={() => shareWebsite(data.facebook)} />
-
-            <FaSquareXTwitter onClick={() => shareWebsite(data.Twitter)} />
-
-            <FaLinkedin onClick={() => shareWebsite(data.linkedin)} />
-          </>
-        )}
-
+      <li style={{ display: `${share ? "flex" : "none"}` }} className="hi">
+        <FaFacebook onClick={() => shareWebsite(data.facebook)} />
+      </li>
+      <li style={{ display: `${share ? "flex" : "none"}` }} className="hi">
+        <FaSquareXTwitter onClick={() => shareWebsite(data.Twitter)} />
+      </li>
+      <li style={{ display: `${share ? "flex" : "none"}` }} className="hi">
+        <FaLinkedin onClick={() => shareWebsite(data.linkedin)} />
+      </li>
+      <li style={{ display: "flex" }}>
         <FaSquareShareNodes onClick={() => setshare(!share)} />
-      </motion.span>
-    </motion.div>
+      </li>
+    </motion.ul>
   );
 }
 
