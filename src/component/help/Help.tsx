@@ -14,7 +14,7 @@ function Help() {
             animate={{ opacity: 1 }}
             transition={{
               duration: 0.55,
-              delay: i / 5,
+              delay: i / 3,
             }}
             key={i}
           >

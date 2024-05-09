@@ -1,5 +1,5 @@
 import { ReactNode, useContext, useEffect, useRef } from "react";
-
+import { motion } from "framer-motion";
 import styles from "./block.module.css";
 import DataContext from "../Context";
 import Help from "../help/Help";
@@ -72,7 +72,14 @@ function Block({ children }: props) {
   }
 
   return (
-    <div className={styles.container}>
+    <motion.div
+      className={styles.container}
+      initial={{ scale: 0.3 }}
+      animate={{ scale: 1 }}
+      transition={{
+        duration: 0.6,
+      }}
+    >
       <Help />
       <div className={styles.blockContainer}>
         <Modal />
@@ -83,7 +90,7 @@ function Block({ children }: props) {
         />
       </div>
       {children}
-    </div>
+    </motion.div>
   );
 }
 

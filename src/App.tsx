@@ -6,7 +6,6 @@ import GifResult from "./component/gif/GifResult";
 import DataContext from "./component/Context";
 import { fetchWord } from "./Helpers/fetchWord";
 import Loader from "./component/loader/Loader";
-
 function App() {
   const inputData = useRef(null);
   const [answer, setanswer] = useState<string[]>([]);
@@ -22,9 +21,10 @@ function App() {
     }
     getAnswer();
   }, []);
+  console.log("render");
   return (
     <div className={styles.app}>
-      {answer.length === 0 ? (
+      {answer.length === 0 && result === "playing" ? (
         <Loader />
       ) : (
         <div className={styles.container}>
