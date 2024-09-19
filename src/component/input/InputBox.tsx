@@ -7,7 +7,7 @@ import Notice from "../notice/Notice";
 import DataContext from "../Context";
 import DataCo from "../Contextkeyboard";
 function InputBox() {
-  const { answer, data, setdata, inputData, setresult } =
+  const { data, dataInput, setdata, inputData, setresult } =
     useContext(DataContext);
   const [focus, setfocus] = useState<boolean>(false);
 
@@ -27,10 +27,10 @@ function InputBox() {
     }
   }
   function CollectWrongData(ArrayData: string[], inputValue: string) {
-    const WrongAnswer = ArrayData.filter((item) => !answer.includes(item));
+    const WrongAnswer = ArrayData.filter((item) => !data.includes(item));
     const Wrong = wrongData.concat(WrongAnswer);
     setwrongData(Wrong);
-    const v = data.map((item) => [item.join("")]);
+    const v = dataInput.map((item) => [item.join("")]);
     const isAlreday = v.flat().includes(inputValue);
     if (isAlreday) {
       setnotice(`Hey! ${inputValue} is already typed!😒`);
@@ -38,12 +38,12 @@ function InputBox() {
     }
   }
   function CheckResult(inputValue: string) {
-    const Answer = answer.join("");
+    const Answer = data.join("");
     if (inputValue == Answer) {
       setTimeout(() => {
         setresult("win");
       }, 2000);
-    } else if (data.length + 1 > 4) {
+    } else if (dataInput.length + 1 > 4) {
       setTimeout(() => {
         setresult("lose");
       }, 2000);
@@ -72,7 +72,7 @@ function InputBox() {
           return;
         }
 
-        const newData = [...data, ArrayData || []];
+        const newData = [...dataInput, ArrayData || []];
         setdata(newData);
         CheckResult(inputValue);
 

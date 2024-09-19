@@ -1,8 +1,8 @@
 import React, { createContext, RefObject } from "react";
 interface props {
-  data: string[][];
+  dataInput: string[][];
   setdata: React.Dispatch<React.SetStateAction<string[][]>>;
-  answer: string[];
+  data: string[];
   inputData: RefObject<HTMLInputElement>;
   setnotice: React.Dispatch<React.SetStateAction<string>>;
   notice: string;
@@ -12,9 +12,9 @@ interface props {
   setopen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const DataContext = createContext<props>({
-  data: [],
+  dataInput: [],
   setdata: () => {},
-  answer: [],
+  data: [],
   inputData: { current: null },
   setnotice: () => {},
   notice: "",

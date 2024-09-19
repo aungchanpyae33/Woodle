@@ -15,7 +15,6 @@ function ShareButton({ share, setshare }: props) {
   function shareWebsite(data: string) {
     window.open(data, "_blank");
   }
-
   useEffect(() => {
     animate(
       ".hi",

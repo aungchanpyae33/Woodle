@@ -10,7 +10,7 @@ interface props {
 }
 function Block({ children }: props) {
   const dataForExitLoop = useRef<string[][]>([]);
-  const { answer, data } = useContext(DataContext);
+  const { data, dataInput } = useContext(DataContext);
 
   function DuplicateObj(ref: string[]) {
     const count: { [key: string]: number } = {};
@@ -23,7 +23,8 @@ function Block({ children }: props) {
     }
     return count;
   }
-  let resetData = DuplicateObj(answer);
+
+  let resetData = DuplicateObj(data);
 
   let styleArray: string[] = [];
 
@@ -32,35 +33,35 @@ function Block({ children }: props) {
       dataForExitLoop.current.push(styleArray);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data.length]);
+  }, [dataInput.length]);
 
   let numberOfCorrectFuture: { [key: string]: number };
   function check(index: number, innerindex: number) {
     if (innerindex === 0) {
-      numberOfCorrectFuture = DuplicateObj(data[index]);
+      numberOfCorrectFuture = DuplicateObj(dataInput[index]);
     }
 
     if (styleArray.length === 5) {
       styleArray = [];
-      resetData = DuplicateObj(answer);
+      resetData = DuplicateObj(data);
     }
     let blockColor = "red";
-    const correctFutureWord = answer.indexOf(data[index][innerindex]);
+    const correctFutureWord = data.indexOf(dataInput[index][innerindex]);
 
-    const isAnotherLetter = resetData[data[index][innerindex]];
+    const isAnotherLetter = resetData[dataInput[index][innerindex]];
 
     const count =
-      numberOfCorrectFuture[data[index][innerindex]] > isAnotherLetter;
+      numberOfCorrectFuture[dataInput[index][innerindex]] > isAnotherLetter;
 
     if (correctFutureWord !== -1 && isAnotherLetter) {
       // if the answer is 1,2,3 , only 1,2,3 are exception from below conditional
 
       if (correctFutureWord > innerindex && count) {
-        numberOfCorrectFuture[data[index][innerindex]]--;
+        numberOfCorrectFuture[dataInput[index][innerindex]]--;
         blockColor = "red";
       } else {
-        resetData[data[index][innerindex]]--;
-        if (answer[innerindex] === data[index][innerindex]) {
+        resetData[dataInput[index][innerindex]]--;
+        if (data[innerindex] === dataInput[index][innerindex]) {
           blockColor = "green";
         } else {
           blockColor = "yellow";
@@ -84,7 +85,7 @@ function Block({ children }: props) {
       <div className={styles.blockContainer}>
         <Modal />
         <MemoizedList
-          data={data}
+          data={dataInput}
           dataForExitLoop={dataForExitLoop}
           check={check}
         />

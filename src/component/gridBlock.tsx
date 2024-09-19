@@ -61,8 +61,7 @@ function GridBlock({ data, dataForExitLoop, check }: prop) {
     </>
   );
 }
-const MemoizedList = memo(GridBlock, (prevProps, nextProps) => {
-  // Implement shallow comparison for props (optional)
-  return prevProps.data.length === nextProps.data.length;
+const MemoizedList = memo(GridBlock, (pre, next) => {
+  return pre.data.length === next.data.length;
 });
 export default MemoizedList;

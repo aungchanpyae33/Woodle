@@ -9,10 +9,10 @@ interface props {
   lose: boolean;
 }
 function ResultText({ children, lose }: props) {
-  const { answer } = useContext(DataContext);
+  const { data } = useContext(DataContext);
   const [hide, sethide] = useState(false);
   const [share, setshare] = useState(false);
-  const answerString = answer.join("");
+  const answerString = data.join("");
 
   return (
     <>
