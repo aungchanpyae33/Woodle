@@ -6,17 +6,21 @@ import ReactMdSize from "../../Helpers/ReactMdsize";
 import Notice from "../notice/Notice";
 import DataContext from "../Context";
 import DataCo from "../Contextkeyboard";
+import stylesloader from "../loader/Loader.module.css";
+
 function InputBox() {
   const { data, dataInput, setdata, inputData, setresult } =
     useContext(DataContext);
-  const [focus, setfocus] = useState<boolean>(false);
 
+  const [focus, setfocus] = useState<boolean>(false);
+  const [isPending, setIsPending] = useState(false);
   const [keyboard, setkeyboard] = useState("");
   const [notice, setnotice] = useState("");
   const [wrongData, setwrongData] = useState<string[]>([]);
   const isSmall = ReactMdSize();
 
   function isNotInTheWord(ArrayData: string[]) {
+    console.log(wrongData);
     const notInTheWords = ArrayData.filter((item) => wrongData.includes(item));
     if (notInTheWords.length !== 0) {
       const RemoveDuplicatValue = [...new Set(notInTheWords)];
@@ -28,8 +32,10 @@ function InputBox() {
   }
   function CollectWrongData(ArrayData: string[], inputValue: string) {
     const WrongAnswer = ArrayData.filter((item) => !data.includes(item));
+
     const Wrong = wrongData.concat(WrongAnswer);
     setwrongData(Wrong);
+
     const v = dataInput.map((item) => [item.join("")]);
     const isAlreday = v.flat().includes(inputValue);
     if (isAlreday) {
@@ -52,7 +58,7 @@ function InputBox() {
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
 
         const inputValue = inputData.current?.value.toUpperCase();
@@ -61,21 +67,38 @@ function InputBox() {
           setnotice("Hey! i need 5 letters😐");
           return;
         }
+        console.log(inputValue, "iv");
         const ArrayData = inputValue?.split("");
-
-        if (wrongData.length !== 0) {
-          if (isNotInTheWord(ArrayData)) {
+        console.log(ArrayData, "ad");
+        if (dataInput.length > 0) {
+          console.log(data);
+          if (CollectWrongData(ArrayData, inputValue)) {
             return;
           }
-        }
-        if (CollectWrongData(ArrayData, inputValue)) {
-          return;
+          if (wrongData.length !== 0) {
+            if (isNotInTheWord(ArrayData)) {
+              return;
+            }
+          }
         }
 
-        const newData = [...dataInput, ArrayData || []];
-        setdata(newData);
-        CheckResult(inputValue);
-
+        async function check() {
+          setIsPending(true);
+          await fetch(
+            `https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue!}`
+          ).then((response) => {
+            setIsPending(false);
+            if (response.status === 200) {
+              console.log("nice");
+              const newData = [...dataInput, ArrayData || []];
+              setdata(newData);
+              CheckResult(inputValue!);
+            } else {
+              setnotice("Hey! this letter is not valid.😐");
+            }
+          });
+        }
+        await check();
         if (inputData.current) {
           inputData.current.value = "";
           inputData.current.focus();
@@ -97,12 +120,17 @@ function InputBox() {
                 type="text"
                 ref={inputData}
                 readOnly
+                lang="en"
+                spellCheck="true"
                 value={keyboard}
                 onClick={() => {
                   setfocus(!focus);
                 }}
                 className={styles.inputWidth}
               />
+
+              {isPending && <div className={stylesloader.loaderCheck}></div>}
+
               {notice && <Notice>{notice}</Notice>}
             </div>
             <Keybord focus={focus} setfocus={setfocus} />
@@ -115,6 +143,11 @@ function InputBox() {
             type="text"
             ref={inputData}
             value={keyboard}
+            lang="en"
+            spellCheck="true"
+            onFocus={(e) => {
+              console.log(e.currentTarget.spellcheck);
+            }}
             //set for to access the data for keyboard
             // pattern="[a-zA-Z]{5}"
             className={styles.inputWidth}
@@ -127,6 +160,9 @@ function InputBox() {
               setkeyboard(limitFive);
             }}
           />
+
+          {isPending && <div className={stylesloader.loaderCheck}></div>}
+
           {notice && <Notice>{notice}</Notice>}
         </div>
       )}
